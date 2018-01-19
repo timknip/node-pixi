@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import * as canvas from 'canvas';
 import XMLHttpRequest from 'xhr2';
 import EventEmitter from 'events';
@@ -333,6 +331,10 @@ class Canvas extends Element {
     }
     set width (value) {
         this._canvas.width = value;
+    }
+
+    toBuffer () {
+        return this._canvas.toBuffer();
     }
 }
 
