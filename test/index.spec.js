@@ -1,5 +1,5 @@
 import fs from 'fs';
-import PIXI from '../src/index';
+import {PIXI} from '../src/index';
 
 describe ('index', function () {
     this.timeout(5000);

@@ -6,7 +6,7 @@ Run PIXI.js on node.
 
 ```javascript
 import fs from 'fs';
-import PIXI from 'node-pixi';
+import {PIXI} from 'node-pixi';
 
 const app = new PIXI.Application({backgroundColor: 0xff0000});
 
