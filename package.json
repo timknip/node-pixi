@@ -1,0 +1,23 @@
+{
+  "name": "node-pixi",
+  "version": "1.0.0",
+  "description": "server side pixi.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -c"
+  },
+  "author": "Tim Knip <tim@floorplanner.com> (http://www.floorplanner.com/)",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^2.0.0-alpha.9",
+    "pixi.js": "^4.7.0",
+    "request": "^2.83.0",
+    "xhr2": "^0.1.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "expect.js": "0.3.1",
+    "mocha": "^2.4.5"
+  }
+}
