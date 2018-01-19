@@ -1,7 +1,15 @@
 {
   "name": "node-pixi",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "server side pixi.js",
+  "keywords": [
+    "pixi",
+    "pixi.js",
+    "server side",
+    "canvas",
+    "node-canvas",
+    "node"
+  ],
   "main": "lib/index.js",
   "scripts": {
     "prepublish": "babel src --out-dir lib",
