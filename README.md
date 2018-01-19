@@ -1,8 +1,8 @@
-### node-pixi
+## node-pixi
 
 Run PIXI.js on node.
 
-## example
+### example
 
 ```javascript
 import fs from 'fs';
