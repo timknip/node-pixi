@@ -374,7 +374,7 @@ export class Canvas extends Element {
                 c.toDataURL('image/jpeg', quality, (err, data) => {
                     if (err) return reject(err);
                     data = data.replace(/^[^,]+/, '');
-                    resolve(new Buffer(data, 'base64'))
+                    resolve(new Buffer(data, 'base64'));
                 });
             } else if (format === 'png') {
                 resolve(c.toBuffer());
@@ -410,12 +410,7 @@ Object.defineProperty(canvas.Image.prototype, "src", {
     set: function src(value) {
         let isBuffer = value instanceof Buffer;
 
-        if (isBuffer || typeof value === 'string') {
-            process.nextTick(() => {
-                this._src = this.source = value;
-                this._eventemitter.emit('load');
-            });
-        } else if (value.match(/^https?/)) {
+        if (typeof value === 'string' && value.match(/^https?/)) {
             request({
                 method: 'GET',
                 url: value,
@@ -432,6 +427,11 @@ Object.defineProperty(canvas.Image.prototype, "src", {
                     this.source = body;
                     this._eventemitter.emit('load');
                 }
+            });
+        } else if (isBuffer || typeof value === 'string') {
+            process.nextTick(() => {
+                this._src = this.source = value;
+                this._eventemitter.emit('load');
             });
         } else {
             process.nextTick(() => {
