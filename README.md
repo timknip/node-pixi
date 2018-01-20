@@ -14,7 +14,30 @@ const app = new PIXI.Application({forceCanvas: true});
 
 Call ```app.view.toBuffer()``` to get a node ```Buffer```.
 
-NOTE: only ```PNG``` is currently supported.
+```javascript
+// toBuffer returns a Promise
+
+// JPEG: (second argument specifies quality, value in range 0 to 1)
+app.view.toBuffer('jpg', 1).then(buffer => {
+    fs.writeFileSync('che.jpg', buffer);
+}).catch(err => {
+    console.error(err);
+});
+
+// PNG:
+app.view.toBuffer('png').then(buffer => {
+    fs.writeFileSync('che.png', buffer);
+}).catch(err => {
+    console.error(err);
+});
+
+// or simply use without arguments
+app.view.toBuffer().then(buffer => {
+    fs.writeFileSync('che.png', buffer);
+}).catch(err => {
+    console.error(err);
+});
+```
 
 ### example
 
@@ -43,7 +66,12 @@ PIXI.loader.onComplete.add(() => {
 
     app.render();
 
-    fs.writeFileSync('che.png', app.view.toBuffer());
+    // toBuffer returns a Promise
+    app.view.toBuffer('jpg', 1).then(buffer => {
+        fs.writeFileSync('che.jpg', buffer);
+    }).catch(err => {
+        console.error(err);
+    });
 });
 
 PIXI.loader.onError.add((err) => {
