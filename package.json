@@ -16,7 +16,7 @@
     "test": "mocha -c"
   },
   "author": "Tim Knip <tim@floorplanner.com> (http://www.floorplanner.com/)",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "canvas": "^2.0.0-alpha.9",
     "gl": "^4.0.4",

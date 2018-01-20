@@ -13,7 +13,7 @@ describe ('index', function () {
         let has_error = false;
         PIXI.loader.onComplete.add(() => {
 
-            const che = new PIXI.Sprite(PIXI.loader.resources.che.texture);
+            let che = new PIXI.Sprite(PIXI.loader.resources.che.texture);
 
             // Setup the position of che
             che.x = app.renderer.width / 2;
