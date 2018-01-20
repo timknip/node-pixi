@@ -378,7 +378,7 @@ export class Canvas extends Element {
             if (format === 'jpg') {
                 c.toDataURL('image/jpeg', quality, (err, data) => {
                     if (err) return reject(err);
-                    data = data.replace(/^[^,]+/, '');
+                    data = data.replace(/^[^,]+,/, '');
                     resolve(new Buffer(data, 'base64'));
                 });
             } else if (format === 'png') {
