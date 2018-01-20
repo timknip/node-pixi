@@ -6,7 +6,7 @@ describe ('index', function () {
 
     it ('should test PIXI', (cb) => {
 
-        const app = new PIXI.Application({backgroundColor: 0xff0000, forceCanvas: true});
+        const app = new PIXI.Application({backgroundColor: 0xff0000, forceCanvas: false});
 
         PIXI.loader.add('che', 'https://www.famousbirthdays.com/headshots/che-guevara-1.jpg');
 

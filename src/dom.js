@@ -403,9 +403,8 @@ export class Canvas extends Element {
     }
 }
 
+// monkey patch Canvas#Image
 canvas.Image.prototype._eventemitter = null;
-canvas.Image.prototype.tim = null;
-
 canvas.Image.prototype.addEventListener = function (name, cb) {
     if (!this._eventemitter) {
         this._eventemitter = new EventEmitter;
