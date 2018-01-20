@@ -378,6 +378,21 @@ export class Canvas extends Element {
                 });
             } else if (format === 'png') {
                 resolve(c.toBuffer());
+            } else if (format === 'pdf' || format === 'svg') {
+                let cnv = canvas.createCanvas(this.width, this.height, format),
+                    ctx = cnv.getContext('2d'),
+                    img = new canvas.Image;
+
+                img.onload = () => {
+                    ctx.drawImage(img, 0, 0, this.width, this.height);
+                    resolve(cnv.toBuffer());
+                };
+                img.onerror = (err) => {
+                    reject(err);
+                };
+                img.src = c.toBuffer();
+            } else {
+                reject(new Error(`invalid format: ${format}`));
             }
         });
     }
@@ -385,7 +400,7 @@ export class Canvas extends Element {
 
 canvas.Image.prototype._eventemitter = new EventEmitter;
 canvas.Image.prototype.addEventListener = function (name, cb) {
-    this._eventemitter.on(name, cb);
+    this._eventemitter.once(name, cb);
 }
 canvas.Image.prototype._src = '';
 Object.defineProperty(canvas.Image.prototype, "src", {
@@ -393,7 +408,8 @@ Object.defineProperty(canvas.Image.prototype, "src", {
         return this._src;
     },
     set: function src(value) {
-        if (value.match(/^https?/)) {
+        let isBuffer = value instanceof Buffer;
+        if (!isBuffer && value.match(/^https?/)) {
             request({
                 method: 'GET',
                 url: value,

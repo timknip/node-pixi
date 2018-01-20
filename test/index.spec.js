@@ -28,7 +28,7 @@ describe ('index', function () {
 
             app.render();
 
-            app.view.toBuffer('jpg').then(buffer => {
+            app.view.toBuffer('jpg', 1).then(buffer => {
                 fs.writeFileSync('che.jpg', buffer);
 
                 if (!has_error) cb();
