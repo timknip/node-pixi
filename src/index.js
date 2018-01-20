@@ -12,15 +12,13 @@ function monkey_patch_loader () {
     let fn = PIXI.loader.onComplete.add;
     PIXI.loader.onComplete.add = function (cb) {
         let f = function (m) {
-            if (window.WebGLRenderingContext) {
-                Object.keys(m.resources).forEach(key => {
-                    let source = m.resources[key].texture.baseTexture.source;
-                    if (source instanceof Image) {
-                        m.resources[key].texture.baseTexture.source =
-                            Canvas.imageToImageData(source);
-                    }
-                });
-            }
+            Object.keys(m.resources).forEach(key => {
+                let source = m.resources[key].texture.baseTexture.source;
+                if (source instanceof Image) {
+                    m.resources[key].texture.baseTexture.source =
+                        Canvas.imageToImageData(source);
+                }
+            });
             cb(m);
         }
         return fn.apply(this, [f])

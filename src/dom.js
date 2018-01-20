@@ -6,6 +6,8 @@ import EventEmitter from 'events';
 import request from 'request';
 import * as webgl from './webgl';
 
+let NODE_PIXI_WEBGL = false;
+
 class Element {
 
     constructor () {
@@ -312,14 +314,18 @@ class CanvasContext {
 export class Canvas extends Element {
 
     static imageToImageData (image, flip_y = true) {
-        let c = canvas.createCanvas(image.width, image.height),
-            ctx = c.getContext('2d');
-        if (flip_y) {
-            ctx.scale(1, -1);
-            ctx.translate(0, -image.height);
+        if (NODE_PIXI_WEBGL) {
+            let c = canvas.createCanvas(image.width, image.height),
+                ctx = c.getContext('2d');
+            if (flip_y) {
+                ctx.scale(1, -1);
+                ctx.translate(0, -image.height);
+            }
+            ctx.drawImage(image, 0, 0);
+            return ctx.getImageData(0, 0, image.width, image.height);
+        } else {
+            return image;
         }
-        ctx.drawImage(image, 0, 0);
-        return ctx.getImageData(0, 0, image.width, image.height);
     }
 
     constructor () {
@@ -338,8 +344,7 @@ export class Canvas extends Element {
             this._webgl = true;
             this._webglResizeExt =
                 this._ctx.getExtension('STACKGL_resize_drawingbuffer');
-        } else {
-            global.window.WebGLRenderingContext = null;
+            NODE_PIXI_WEBGL = true;
         }
         return this._ctx;
     }
@@ -398,8 +403,13 @@ export class Canvas extends Element {
     }
 }
 
-canvas.Image.prototype._eventemitter = new EventEmitter;
+canvas.Image.prototype._eventemitter = null;
+canvas.Image.prototype.tim = null;
+
 canvas.Image.prototype.addEventListener = function (name, cb) {
+    if (!this._eventemitter) {
+        this._eventemitter = new EventEmitter;
+    }
     this._eventemitter.once(name, cb);
 }
 canvas.Image.prototype._src = '';
