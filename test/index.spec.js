@@ -6,7 +6,7 @@ describe ('index', function () {
 
     it ('should test PIXI', (cb) => {
 
-        const app = new PIXI.Application({backgroundColor: 0xff0000, forceCanvas: false});
+        const app = new PIXI.Application({backgroundColor: 0xff0000, forceCanvas: true});
 
         PIXI.loader.add('che', 'https://www.famousbirthdays.com/headshots/che-guevara-1.jpg');
 
@@ -28,9 +28,11 @@ describe ('index', function () {
 
             app.render();
 
-            fs.writeFileSync('che.jpg', app.view.toBuffer());
+            app.view.toBuffer('jpg').then(buffer => {
+                fs.writeFileSync('che.jpg', buffer);
 
-            if (!has_error) cb();
+                if (!has_error) cb();
+            }).catch(cb);
         });
 
         PIXI.loader.onError.add((err) => {

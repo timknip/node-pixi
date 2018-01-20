@@ -1,3 +1,4 @@
+import fs from 'fs';
 import gl from 'gl';
 import * as canvas from 'canvas';
 import XMLHttpRequest from 'xhr2';
@@ -363,12 +364,22 @@ export class Canvas extends Element {
         this._canvas.width = value;
     }
 
-    toBuffer () {
-        if (this._webgl) {
-            return webgl.to_png(this._ctx, this.width, this.height);
-        } else {
-            return this._canvas.toBuffer();
-        }
+    toBuffer (format = 'png', quality = 1) {
+        let c = this._webgl ?
+            webgl.to_canvas(this._ctx, this.width, this.height) :
+            this._canvas;
+
+        return new Promise((resolve, reject) => {
+            if (format === 'jpg') {
+                c.toDataURL('image/jpeg', quality, (err, data) => {
+                    if (err) return reject(err);
+                    data = data.replace(/^[^,]+/, '');
+                    resolve(new Buffer(data, 'base64'))
+                });
+            } else if (format === 'png') {
+                resolve(c.toBuffer());
+            }
+        });
     }
 }
 

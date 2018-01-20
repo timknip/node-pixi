@@ -1,6 +1,6 @@
 import {createCanvas, createImageData} from 'canvas';
 
-export function to_png (gl, width, height) {
+export function to_canvas (gl, width, height) {
     let pixels = new Uint8Array(width * height * 4),
         canvas = createCanvas(width, height),
         ctx = canvas.getContext('2d');
@@ -11,5 +11,9 @@ export function to_png (gl, width, height) {
 
     ctx.putImageData(data, 0, 0);
 
-    return canvas.toBuffer();
+    return canvas;
+}
+
+export function to_png (gl, width, height) {
+    return to_canvas(gl, width, height).toBuffer();
 }
