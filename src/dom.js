@@ -1,7 +1,9 @@
+import gl from 'gl';
 import * as canvas from 'canvas';
 import XMLHttpRequest from 'xhr2';
 import EventEmitter from 'events';
 import request from 'request';
+import * as webgl from './webgl';
 
 class Element {
 
@@ -306,16 +308,38 @@ class CanvasContext {
     }
 }
 
-class Canvas extends Element {
+export class Canvas extends Element {
+
+    static imageToImageData (image, flip_y = true) {
+        let c = canvas.createCanvas(image.width, image.height),
+            ctx = c.getContext('2d');
+        if (flip_y) {
+            ctx.scale(1, -1);
+            ctx.translate(0, -image.height);
+        }
+        ctx.drawImage(image, 0, 0);
+        return ctx.getImageData(0, 0, image.width, image.height);
+    }
 
     constructor () {
         super();
 
         this._canvas = canvas.createCanvas(1, 1);
         this._ctx = new CanvasContext(this._canvas);
+        this._webgl = false;
+        this._webglResizeExt = null;
     }
 
-    getContext (value) {
+    getContext (value, contextOptions) {
+        if (value === 'webgl') {
+            this._ctx = gl(1, 1, contextOptions);
+            global.window.WebGLRenderingContext = this._ctx;
+            this._webgl = true;
+            this._webglResizeExt =
+                this._ctx.getExtension('STACKGL_resize_drawingbuffer');
+        } else {
+            global.window.WebGLRenderingContext = null;
+        }
         return this._ctx;
     }
 
@@ -323,6 +347,9 @@ class Canvas extends Element {
         return this._canvas.height;
     }
     set height (value) {
+        if (this._webglResizeExt) {
+            this._webglResizeExt.resize(this.width, value);
+        }
         this._canvas.height = value;
     }
 
@@ -330,11 +357,18 @@ class Canvas extends Element {
         return this._canvas.width;
     }
     set width (value) {
+        if (this._webglResizeExt) {
+            this._webglResizeExt.resize(value, this.height);
+        }
         this._canvas.width = value;
     }
 
     toBuffer () {
-        return this._canvas.toBuffer();
+        if (this._webgl) {
+            return webgl.to_png(this._ctx, this.width, this.height);
+        } else {
+            return this._canvas.toBuffer();
+        }
     }
 }
 
@@ -376,6 +410,7 @@ Object.defineProperty(canvas.Image.prototype, "src", {
 });
 
 class Document {
+
     constructor () {
         this.body = new Element;
         this.documentElement = this.body;
@@ -400,14 +435,16 @@ class Document {
 }
 
 class Window {
+
     constructor (document) {
         this.document = document;
         this.navigator = {
             userAgent: 'node-pixi',
-            appVersion: '0.1.0'
+            appVersion: '0.3.3'
         };
         this.location = "http://localhost/";
         this.Image = canvas.Image;
+        this.WebGLRenderingContext = {};
     }
 
     addEventListener () {}

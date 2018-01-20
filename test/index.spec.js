@@ -1,12 +1,12 @@
 import fs from 'fs';
-import {PIXI} from '../src/index';
+import {PIXI, Canvas} from '../src/index';
 
 describe ('index', function () {
     this.timeout(5000);
 
     it ('should test PIXI', (cb) => {
 
-        const app = new PIXI.Application({backgroundColor: 0xff0000});
+        const app = new PIXI.Application({backgroundColor: 0xff0000, forceCanvas: false});
 
         PIXI.loader.add('che', 'https://www.famousbirthdays.com/headshots/che-guevara-1.jpg');
 

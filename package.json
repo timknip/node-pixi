@@ -19,6 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "canvas": "^2.0.0-alpha.9",
+    "gl": "^4.0.4",
     "pixi.js": "^4.7.0",
     "request": "^2.83.0",
     "xhr2": "^0.1.4"

@@ -1,6 +1,20 @@
 ## node-pixi
 
-Run PIXI.js on node.
+Run [PIXI.js](https://github.com/pixijs/pixi.js/) on node.
+
+Headless WebGL rendering is enabled through the [GL](https://www.npmjs.com/package/gl) package.
+
+To force canvas rendering:
+
+```javascript
+const app = new PIXI.Application({forceCanvas: true});
+```
+
+### image output
+
+Call ```app.view.toBuffer()``` to get a node ```Buffer```.
+
+NOTE: only ```PNG``` is currently supported.
 
 ### example
 
@@ -29,7 +43,7 @@ PIXI.loader.onComplete.add(() => {
 
     app.render();
 
-    fs.writeFileSync('che.jpg', app.view.toBuffer());
+    fs.writeFileSync('che.png', app.view.toBuffer());
 });
 
 PIXI.loader.onError.add((err) => {
