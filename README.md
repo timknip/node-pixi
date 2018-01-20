@@ -14,6 +14,13 @@ const app = new PIXI.Application({forceCanvas: true});
 
 Call ```app.view.toBuffer()``` to get a node ```Buffer```.
 
+Supported formats:
+
+-  jpg
+-  png
+-  pdf
+-  svg
+
 ```javascript
 // toBuffer returns a Promise
 
@@ -34,6 +41,20 @@ app.view.toBuffer('png').then(buffer => {
 // or simply use without arguments
 app.view.toBuffer().then(buffer => {
     fs.writeFileSync('che.png', buffer);
+}).catch(err => {
+    console.error(err);
+});
+
+// PDF:
+app.view.toBuffer('pdf').then(buffer => {
+    fs.writeFileSync('che.pdf', buffer);
+}).catch(err => {
+    console.error(err);
+});
+
+// SVG:
+app.view.toBuffer('svg').then(buffer => {
+    fs.writeFileSync('che.svg', buffer);
 }).catch(err => {
     console.error(err);
 });
