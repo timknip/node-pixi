@@ -409,7 +409,13 @@ Object.defineProperty(canvas.Image.prototype, "src", {
     },
     set: function src(value) {
         let isBuffer = value instanceof Buffer;
-        if (!isBuffer && value.match(/^https?/)) {
+
+        if (isBuffer || typeof value === 'string') {
+            process.nextTick(() => {
+                this._src = this.source = value;
+                this._eventemitter.emit('load');
+            });
+        } else if (value.match(/^https?/)) {
             request({
                 method: 'GET',
                 url: value,
@@ -429,8 +435,11 @@ Object.defineProperty(canvas.Image.prototype, "src", {
             });
         } else {
             process.nextTick(() => {
-                this._src = this.source = value;
-                this._eventemitter.emit('load');
+                this._eventemitter.emit('error', {
+                    target: {
+                        nodeName: new Error('unable to set Image#src')
+                    }
+                });
             });
         }
     }

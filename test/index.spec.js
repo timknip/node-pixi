@@ -8,7 +8,7 @@ describe ('index', function () {
 
         const app = new PIXI.Application({backgroundColor: 0xff0000, forceCanvas: false});
 
-        PIXI.loader.add('che', 'https://www.famousbirthdays.com/headshots/che-guevara-1.jpg');
+        PIXI.loader.add('che', 'tim.jpg');
 
         let has_error = false;
         PIXI.loader.onComplete.add(() => {
