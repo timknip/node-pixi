@@ -86,7 +86,7 @@ export class Canvas extends Element {
         let patch = (ctx, name) => {
             const prev = ctx[name];
             ctx[name] = function (image) {
-                arguments[0] = image._canvas;
+                arguments[0] = image instanceof Image ? image : image._canvas;
                 return prev.apply(ctx, arguments);
             };
         };
