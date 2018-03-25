@@ -57,260 +57,6 @@ class AnchorElement extends Element {
     }
 }
 
-class CanvasContext {
-
-    constructor (canvas) {
-        this._canvas = canvas;
-        this._ctx = this._canvas.getContext('2d');
-    }
-
-    get canvas () {
-        return this._canvas;
-    }
-
-    get fillStyle () {
-        return this._ctx.fillStyle;
-    }
-    set fillStyle (value) {
-        this._ctx.fillStyle = value;
-    }
-
-    get font () {
-        return this._ctx.font;
-    }
-    set font (value) {
-        this._ctx.font = value;
-    }
-
-    get globalAlpha () {
-        return this._ctx.globalAlpha;
-    }
-    set globalAlpha (value) {
-        this._ctx.globalAlpha = value;
-    }
-
-    get globalCompositeOperation () {
-        return this._ctx.globalCompositeOperation;
-    }
-    set globalCompositeOperation (value) {
-        this._ctx.globalCompositeOperation = value;
-    }
-
-    get lineCap () {
-        return this._ctx.lineCap;
-    }
-    set lineCap (value) {
-        this._ctx.lineCap = value;
-    }
-
-    get lineJoin () {
-        return this._ctx.lineJoin;
-    }
-    set lineJoin (value) {
-        this._ctx.lineJoin = value;
-    }
-
-    get lineWidth () {
-        return this._ctx.lineWidth;
-    }
-    set lineWidth (value) {
-        this._ctx.lineWidth = value;
-    }
-
-    get miterLimit () {
-        return this._ctx.miterLimit;
-    }
-    set miterLimit (value) {
-        this._ctx.miterLimit = value;
-    }
-
-    get shadowBlur () {
-        return this._ctx.shadowBlur;
-    }
-    set shadowBlur (value) {
-        this._ctx.shadowBlur = value;
-    }
-
-    get shadowColor () {
-        return this._ctx.shadowColor;
-    }
-    set shadowColor (value) {
-        this._ctx.shadowColor = value;
-    }
-
-    get shadowOffsetX () {
-        return this._ctx.shadowOffsetX;
-    }
-    set shadowOffsetX (value) {
-        this._ctx.shadowOffsetX = value;
-    }
-
-    get shadowOffsetY () {
-        return this._ctx.shadowOffsetY;
-    }
-    set shadowOffsetY (value) {
-        this._ctx.shadowOffsetY = value;
-    }
-
-    get strokeStyle () {
-        return this._ctx.strokeStyle;
-    }
-    set strokeStyle (value) {
-        this._ctx.strokeStyle = value;
-    }
-
-    get textAlign () {
-        return this._ctx.textAlign;
-    }
-    set textAlign (value) {
-        this._ctx.textAlign = value;
-    }
-
-    get textBaseline () {
-        return this._ctx.textBaseline;
-    }
-    set textBaseline (value) {
-        this._ctx.textBaseline = value;
-    }
-
-    arc (x, y, radius, startAngle, endAngle, anticlockwise) {
-        this._ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise);
-    }
-
-    arcTo (x1, y1, x2, y2, radius) {
-        this._ctx.arcTo(x1, y1, x2, y2, radius);
-    }
-
-    beginPath () {
-        this._ctx.beginPath();
-    }
-
-    bezierCurveTo (cp1x, cp1y, cp2x, cp2y, x, y) {
-        this._ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y);
-    }
-
-    clearRect (x, y, w, h) {
-        this._ctx.clearRect(x, y, w, h);
-    }
-
-    clip () {
-        this._ctx.clip();
-    }
-
-    closePath () {
-        this._ctx.closePath();
-    }
-
-    createImageData (w, h) {
-        return this._ctx.createImageData(w, h);
-    }
-
-    createLinearGradient (x0, y0, x1, y1) {
-        return this._ctx.createLinearGradient(x0, y0, x1, y1);
-    }
-
-    createPattern (image, repetition) {
-        return this._ctx.createPattern(
-            image instanceof Canvas ? image._canvas : image,
-            repetition);
-    }
-
-    createRadialGradient (x0, y0, r0, x1, y1, r1) {
-        return this._ctx.createRadialGradient(x0, y0, r0, x1, y1, r1);
-    }
-
-    drawImage (image, sx, sy, sw, sh, dx, dy, dw, dh) {
-        this._ctx.drawImage(
-            image instanceof Canvas ? image._canvas : image,
-            sx, sy, sw, sh, dx, dy, dw, dh);
-    }
-
-    fill () {
-        this._ctx.fill();
-    }
-
-    fillRect (x, y, w, h) {
-        this._ctx.fillRect(x, y, w, h);
-    }
-
-    fillText (text, x, y, maxWidth) {
-        this._ctx.fillText(text, x, y, maxWidth);
-    }
-
-    getImageData (sx, sy, sw, sh) {
-        return this._ctx.getImageData(sx, sy, sw, sh);
-    }
-
-    isPointInPath (x, y) {
-        return this._ctx.isPointInPath(x, y);
-    }
-
-    lineTo (x, y) {
-        this._ctx.lineTo(x, y);
-    }
-
-    measureText (text) {
-        return this._ctx.measureText(text);
-    }
-
-    moveTo (x, y) {
-        this._ctx.moveTo(x, y);
-    }
-
-    putImageData (imagedata, dx, dy, dirtyX, dirtyY, dirtyWidth, dirtyHeight) {
-        this._ctx.putImageData(
-            imagedata, dx, dy, dirtyX, dirtyY, dirtyWidth, dirtyHeight);
-    }
-
-    quadraticCurveTo (cpx, cpy, x, y) {
-        this._ctx.quadraticCurveTo(cpx, cpy, x, y);
-    }
-
-    rect (x, y, w, h) {
-        this._ctx.rect(x, y, w, h);
-    }
-
-    restore () {
-        this._ctx.restore();
-    }
-
-    rotate (angle) {
-        this._ctx.rotate(angle);
-    }
-
-    save () {
-        this._ctx.save();
-    }
-
-    scale (sx, sy) {
-        this._ctx.scale(sx, sy);
-    }
-
-    setTransform (m11, m12, m21, m22, dx, dy) {
-        this._ctx.setTransform(m11, m12, m21, m22, dx, dy);
-    }
-
-    stroke () {
-        this._ctx.stroke();
-    }
-
-    strokeRect (x, y, w, h) {
-        this._ctx.strokeRect(x, y, w, h);
-    }
-
-    strokeText (text, x, y, maxWidth) {
-        this._ctx.strokeText(text, x, y, maxWidth);
-    }
-
-    translate (dx, dy) {
-        this._ctx.translate(dx, dy);
-    }
-
-    transform (m11, m12, m21, m22, dx, dy) {
-        this._ctx.transform(m11, m12, m21, m22, dx, dy);
-    }
-}
-
 export class Canvas extends Element {
 
     static imageToImageData (image, flip_y = true) {
@@ -332,7 +78,22 @@ export class Canvas extends Element {
         super();
 
         this._canvas = canvas.createCanvas(1, 1);
-        this._ctx = new CanvasContext(this._canvas);
+
+        //patching this stuff is necessary, see jsdom HTMLCanvasElement-impl
+        this._ctx = this._canvas.getContext('2d');
+        this._ctx.canvas = this._canvas;
+
+        let patch = (ctx, name) => {
+            const prev = ctx[name];
+            ctx[name] = function (image) {
+                arguments[0] = image._canvas;
+                return prev.apply(ctx, arguments);
+            };
+        };
+
+        patch(this._ctx, 'createPattern');
+        patch(this._ctx, 'drawImage');
+        
         this._webgl = false;
         this._webglResizeExt = null;
     }
